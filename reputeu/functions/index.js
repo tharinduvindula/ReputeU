@@ -1,10 +1,11 @@
 /* eslint-disable no-await-in-loop */
-const AlgoliaKeys = require("./credentials");
 const functions = require("firebase-functions");
+const ALGOLIA_ADMIN_KEY = functions.config().algolia.key;
+const ALGOLIA_ID = functions.config().algolia.app;
 const admin = require("firebase-admin");
 const algoliasearch = require("algoliasearch");
 admin.initializeApp({
-  storageBucket: "reputeu-ucsc-dev.appspot.com"
+  storageBucket: "reputeu-930d2.appspot.com"
 });
 
 exports.createUserFollowersAndAlgolia = functions.auth
@@ -58,8 +59,8 @@ exports.createUserFollowersAndAlgolia = functions.auth
 
     const ALGOLIA_INDEX_NAME = "ru_users";
     const client = algoliasearch(
-      AlgoliaKeys.ALGOLIA_ID,
-      AlgoliaKeys.ALGOLIA_ADMIN_KEY
+      ALGOLIA_ID,
+      ALGOLIA_ADMIN_KEY
     );
     const index = client.initIndex(ALGOLIA_INDEX_NAME);
     index.setSettings({
@@ -85,8 +86,8 @@ exports.updateUserAlgolia = functions.firestore
 
     const ALGOLIA_INDEX_NAME = "ru_users";
     const client = algoliasearch(
-      AlgoliaKeys.ALGOLIA_ID,
-      AlgoliaKeys.ALGOLIA_ADMIN_KEY
+      ALGOLIA_ID,
+      ALGOLIA_ADMIN_KEY
     );
     const index = client.initIndex(ALGOLIA_INDEX_NAME);
 
@@ -246,8 +247,8 @@ exports.deleteUser = functions.auth.user().onDelete(async user => {
 
   const ALGOLIA_INDEX_NAME = "ru_users";
   const client = algoliasearch(
-    AlgoliaKeys.ALGOLIA_ID,
-    AlgoliaKeys.ALGOLIA_ADMIN_KEY
+    ALGOLIA_ID,
+    ALGOLIA_ADMIN_KEY
   );
   const index = client.initIndex(ALGOLIA_INDEX_NAME);
 
@@ -274,8 +275,8 @@ exports.insertPostAlgolia = functions.firestore
     post.objectID = context.params.postId;
     const ALGOLIA_INDEX_NAME = "ru_posts_" + post.authorUID;
     const client = algoliasearch(
-      AlgoliaKeys.ALGOLIA_ID,
-      AlgoliaKeys.ALGOLIA_ADMIN_KEY
+      ALGOLIA_ID,
+      ALGOLIA_ADMIN_KEY
     );
     const index = client.initIndex(ALGOLIA_INDEX_NAME);
     index.setSettings({
@@ -335,8 +336,8 @@ exports.updatePostAlgolia = functions.firestore
 
     const ALGOLIA_INDEX_NAME = "ru_posts_" + newPostValues.authorUID;
     const client = algoliasearch(
-      AlgoliaKeys.ALGOLIA_ID,
-      AlgoliaKeys.ALGOLIA_ADMIN_KEY
+      ALGOLIA_ID,
+      ALGOLIA_ADMIN_KEY
     );
     const index = client.initIndex(ALGOLIA_INDEX_NAME);
 
@@ -356,8 +357,8 @@ exports.deletePostAlgolia = functions.firestore
 
     const ALGOLIA_INDEX_NAME = "ru_posts_" + deletedPost.authorUID;
     const client = algoliasearch(
-      AlgoliaKeys.ALGOLIA_ID,
-      AlgoliaKeys.ALGOLIA_ADMIN_KEY
+      ALGOLIA_ID,
+      ALGOLIA_ADMIN_KEY
     );
     const index = client.initIndex(ALGOLIA_INDEX_NAME);
 
